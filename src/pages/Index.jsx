@@ -8,10 +8,10 @@ const Index = () => {
   const toast = useToast();
 
   const handleGenerateScript = async () => {
-    if (!videoUrl) {
+    if (!videoUrl || videoUrl === "") {
       toast({
         title: "Error",
-        description: "Please enter a video URL.",
+        description: "Please upload a video file.",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -20,7 +20,7 @@ const Index = () => {
     }
 
     // Placeholder for script generation logic
-    const generatedScript = `Generated script for video at ${videoUrl}`;
+    const generatedScript = `Generated script for uploaded video: ${videoUrl}`;
     setScript(generatedScript);
   };
 
@@ -31,7 +31,7 @@ const Index = () => {
           Video Script Generator
         </Heading>
         <Text textAlign="center">Enter the URL of a video to generate a readable script.</Text>
-        <Input placeholder="Enter video URL here" value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} />
+        <Input type="file" accept="video/*" onChange={(e) => setVideoUrl(e.target.files[0] ? e.target.files[0].name : "")} />
         <Button leftIcon={<FaRegClipboard />} colorScheme="blue" onClick={handleGenerateScript}>
           Generate Script
         </Button>
